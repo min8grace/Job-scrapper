@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "job-scrapper"
+version = "0.1.0"
+description = ""
+authors = ["min8grace <56316476+min8grace@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "job_scrapper"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
