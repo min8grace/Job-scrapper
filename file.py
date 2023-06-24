@@ -4,7 +4,6 @@ def save_to_file(file_name, jobs):
 
     num =0
     for job in jobs:
-        # print(job)
         num = num+1
         if num == 50 :
             break

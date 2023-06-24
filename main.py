@@ -12,7 +12,7 @@ db = {
 
 @app.route("/")
 def home():
-    return render_template("home.html", name = "nico")
+    return render_template("home.html")
 
 @app.route("/search")
 def search():
@@ -26,12 +26,9 @@ def search():
     else:    
         wwr = extractor_wwr_jobs(_keyword)
         rok = extractor_rok_jobs(_keyword)
-        # print(wwr)
-        # print(rok)
         _jobs = wwr + rok
         db[_keyword] = _jobs
     return render_template("search.html", keyword = _keyword, jobs = _jobs)
-
 
 @app.route("/export")
 def export():
@@ -42,6 +39,5 @@ def export():
         return redirect(f"/search?keyword={_keyword}")    
     save_to_file(_keyword, db[_keyword])
     return send_file(f"{_keyword}.csv", as_attachment=True) # as_attachment=True ==> download is allowed
-
 
 app.run("127.0.0.1")

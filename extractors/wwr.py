@@ -16,14 +16,10 @@ def extractor_wwr_jobs(keyword):
           job_posts = job_section.find_all('li')
           job_posts.pop(-1)
 
-          num =0
           for post in job_posts:
               anchors = post.find_all('a')
               anchor = anchors[1]
               link = anchor['href']
-              # print(f"{num}") 
-              # num = num +1
-              # print(type(anchor.find_all('span', class_="company")))
               if len(anchor.find_all('span', class_="company")) == 3 :
                 company, kind, region = anchor.find_all('span', class_="company")
               else :
