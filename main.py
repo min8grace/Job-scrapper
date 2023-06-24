@@ -1,32 +1,29 @@
-from bs4 import BeautifulSoup
-import requests
+from flask import Flask, render_template, request
+from extractors.rok import extractor_rok_jobs
+from extractors.wwr import extractor_wwr_jobs
 
+app = Flask("JobScrapper")
 
-def extract_jobs(term):
-  results = []
-  url = f"https://remoteok.com/remote-{term}-jobs"
-  request = requests.get(url, headers={"User-Agent": "Kimchi"})
-  if request.status_code == 200:
-    soup = BeautifulSoup(request.text, "html.parser")
-    jobs = soup.find_all('td', class_="company position company_and_position")
-    jobs.pop(0)
-    for job in jobs:
-      title = job.find(attrs={"itemprop": "title"})
-      name = job.find(attrs={"itemprop": "name"})
-      location = job.find('div', class_="location")
+#caching
+#once the keyword gets searched, then db will store it to pass it over quickly
+db = {
+}
 
-      job_data = {
-        'title': title.string,
-        'name': name.string,
-        'location': location.string
-      }
-      results.append(job_data)
+@app.route("/")
+def home():
+    return render_template("home.html", name = "nico")
 
-    for result in results:
-      print(result)
-      print("----------------------------------")
-  else:
-    print("Can't get jobs.")
-
-
-extract_jobs("python")
+@app.route("/search")
+def search():
+    _keyword = request.args.get("keyword")
+    if _keyword in db:
+        jobs = db[_keyword]
+    else:    
+        wwr = extractor_wwr_jobs(_keyword)
+        rok = extractor_rok_jobs(_keyword)
+        # print(wwr)
+        # print(rok)
+        _jobs = wwr + rok
+        db[_keyword] = jobs
+    return render_template("search.html", keyword = _keyword, jobs = _jobs)
+app.run("127.0.0.1")
