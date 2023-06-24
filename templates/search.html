@@ -11,9 +11,13 @@
 
 <body>
     <main class="container">
+
         <H1>Search Results for {{keyword}}:</H1>
+        <a target="_blank" href="/export?keyword={{keyword}}">Export to file</a>
+
+
         <figure>
-            <table>
+            <table role="grid">
                 <thead>
                     <tr>
                         <th>Position</th>
@@ -28,15 +32,12 @@
                         <td>{{job.position}}</td>
                         <td>{{job.company}}</td>
                         <td>{{job.location}}</td>
-                        <td> <a href="{{job.link}}" target="_blank">Apply now &rarr;</a></td>
+                        <td> <a href="{{job.link}}" target="_blank">Apply &rarr;</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </figure>
-
-
-
     </main>
 </body>
 

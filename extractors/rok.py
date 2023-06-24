@@ -20,9 +20,9 @@ def extractor_rok_jobs(term):
 
       job_data = {
         'link': "", #f"https://weworkremotely.com{link}",
-        'company': title.string.replace(",",""),        
-        'location': location.string.replace(",",""),
-        'position': name.string.replace(",",""),
+        'company': title.string.replace(",","").replace("🌏",""),        
+        'location': location.string.replace(",","").replace("🌏",""),
+        'position': name.string.replace(",","").replace("🌏",""),
       }
       results.append(job_data)
 
